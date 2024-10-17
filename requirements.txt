@@ -1,0 +1,6 @@
+phidata
+openai
+duckduckgo-search
+python-dotenv
+yfinance
+nats-py
