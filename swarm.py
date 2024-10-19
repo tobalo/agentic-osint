@@ -1,6 +1,6 @@
 ### AUTHOR: Tobalo Torres-Valderas
 ### DATE: 2024-10-16
-### PURPOSE: Create a swarm of agents that can be used to perform osint research
+### PURPOSE: Create a swarm of agents that can be used to perform targeted intelligence research
 import os
 import asyncio
 import nats
@@ -23,11 +23,9 @@ async def main():
         question = data["question"]
         swarm_sub_queue = msg.subject.split(".")[-1]
         logging.info(f"Received message on: {swarm_sub_queue} with question: {question}")
-        swarm.print_response(question, stream=True)
-
+        await swarm.arun(question)
     await nc.subscribe(f"{SWARM_BASE_QUEUE}.*", cb=message_handler)
     logging.info(f"Subscribed to {SWARM_BASE_QUEUE}.*")
-
     # Keep the program running to listen for incoming messages
     try:
         while True:
